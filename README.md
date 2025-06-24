@@ -1,28 +1,28 @@
 # Gross Domestic Product Prediction
 
 ## Background
-The Gross Domestic Product (GDP) is crucial indikator to measure total value of  overall goods and services yang diproduksi negara dalam waktu tertentu, biasanya dalam quartil atau dalam tahun. GDP menjadi tolok ukur penting dari makroekonomi sebuah negara dan menjadi basis dasar untuk merumuskan kebijakan ekonomi. Selain karena faktro endogen seperti investment, consumption, and inflation, exogenous factors such as conflict and pandemic contribute to penurunan akurasi dari GDP forecasting. 
+The Gross Domestic Product (GDP) is a crucial indicator to measure the total value of overall goods and services produced by a country in a certain period of time, usually in quarter or in a year. GDP is an important benchmark of a country's macroeconomics and a basic basis for formulating economic policies. In addition to endogenous factor such as investment, consumption, and inflation, exogenous factors like conflict and pandemic contribute to decline in the accuracy of GDP forecasting. 
 
 ## Goal
 The project's aim is: 
 
-1. Data and Model Exploration yang dapat memprediksi quartil pertumbuhan U.S. GDP tahun 2025 keatas.
+1. Data and Model Exploration that can predict the quartiles of U.S. GDP growth in 2025 and above.
 
 ## Limitation
-Dalam proyek GDP prediction, ada banyak sekali indikator atau fitur-fitur yang tidak dimasukkan atau diperhitungkan karena akses yang dibatasi oleh pihak instansi
+In the GDP prediction project, there are many indicators or features that are not included or taken into account because access is restricted by the agency.
 
 ## Data Descriptions
-This data is open-source and is obtained from the Federal Reserve Economic Data (FRED), an online database created by the financial institution, The Federal Reserve Bank of St. Louis. Data ini dapat berupa format .csv, .xlsx., pdf, atau dapat diambil dengan menggunakan API.
+This data is open-source and is obtained from the Federal Reserve Economic Data (FRED), an online database created by the financial institution, The Federal Reserve Bank of St. Louis. This data can be in .csv, .xlsx., pdf format, or can be retrieved using the API.
 
 ### GDP Data 1947 - 1958
-Data ini memiliki beberapa fitur yang terbagi berdasarkan durasi tahun. Beberapa indikator yang terdapat pada data ini:
+This data has several features that are divided based on the duration of the year. Several indicators contained in this data:
 
-- Gross Domestic Product (Quarterly GDP)
-- Import Goods and Services (Quarterly Import)
-- Gross Private Domestic Investment (Quarterly Investment)
-- Personal Consumption Expenditure (Quarterly Consumption) 
-- Export Goods and Services (Quarterly Export)
-- Industrial Production: Utilites: Electric and Gas Utilites (Quarterly Index)
+- Gross Domestic Product (Quarterly GDP) $\rightarrow$ `yoy_gdp`
+- Import Goods and Services (Quarterly Import) $\rightarrow$ `yoy_impgs`
+- Gross Private Domestic Investment (Quarterly Investment) $\rightarrow$ `yoy_gpdic`
+- Personal Consumption Expenditure (Quarterly Consumption) $\rightarrow$ `yoy_pce`
+- Export Goods and Services (Quarterly Export) $\rightarrow$ `yoy_expgs`
+- Industrial Production: Utilites: Electric and Gas Utilites (Quarterly Index) $\rightarrow$ `yoy_`
 
 ### GDP Data 1959 - 1971
 The features on this duration are the same as before, but with the addition of:
@@ -55,6 +55,25 @@ Based on the picture, we see several economic events:
 2. Great Recession 2007-2009: Krisis ekonomi tahun ini dikarenakan subprime motgage crisis, dimana bank mengeluarkan pinjaman rumah dengan resiko atau bunga tinggi kepada kreditur yang memiliki sejarah kredit yang buruk. Permintaan konsumen terhadap rumah meningkat karena suku bunga yang rendah dan syarat pinjaman yang mudah pada 2001. Banyak pembeli rumah yang mengajukan adjustable-rate mortgage (produk dari subprime mortgage). Namun, pada saat suku bunga mulai naik pada 2005, nilai pembayaran hipotek juga meningkat. Akhirnya, peminjam-peminjam yang gagal bayar tidak akan diberikan pinjaman laih bank, sehingga mereka terlilit utang dan harga rumah anjlok. The collapse of the subprime mortgage market led to bank failures, a credit freeze, and a global economic downturn.
 
 3. The Pandemic Recession 2020: Krisis ini diakibatkan penyakit dari virus COVID-19. Karena pandemi ini, pemerintah turun tangan dengan memberlakukan lockdown-membatasi aktifitas masyarakat-untuk mengurangi sebaran penyakit ini. Akibatnya, beberapa toko tutup permanen, unemployment rate meningkat tajam, dan akhirnya GDP negara menurun.
+
+<p align = "center">
+<img width = "500" height = "350" src = "figures/correlation matrix 1947 1958.png">
+</p>
+
+<p align = "center">
+<img width = "500" height = "350" src = "figures/correlation matrix 1959 1971.png">
+</p>
+
+<p align = "center">
+<img width = "500" height = "350" src = "figures/correlation matrix 1972 2003.png">
+</p>
+
+<p align = "center">
+<img width = "500" height = "350" src = "figures/correlation matrix 2004 2024.png">
+</p>
+
+
+- Gambar diatas merupakan matriks korelasi untuk setiap fitur-fitur yang ada di dalam dengan renge tertentu dalam bentuk plot heatmap. The `yoy_pce`, *Personal Consumption Expenditures*, mendapatkan nilai tertinggi dalam perhitungan korelasi Pearson untuk setiap jarak tahun. Artinya, peningkatan konsumsi masyarakat sangat mempengaruhi pendapatan negara jika dibandingkan dengan fitur-fitur lain.
 
 Proyek kali ini akan memperhatikan model mana saja yang dapat memprediksi GDP secara akurat, mulai dari negara mengalami surplus hingga krisis ekonomi.
 
@@ -112,11 +131,13 @@ dimana $\beta_0$ adalah intercept, $\beta_1, \beta_2$ denotes slope, $X_1, X_2, 
 - Gambar diatas merupakan hasil prediksi model dengan data dari tahun 1972 hingga 2003 yang memiliki 10 fitur. RMSE regressi linear dengan data ini lebih kecil jika dibandinkan dengan data-data sebelumnya.
 
 ### LASSO Regression
-LASSO (Least Absolute Shrinkage Selection Operator) Regression, also known as L1 Regression, merupakan salah satu regularized regression yang secara matematis hampir mirip dengan Linear Regression. Namun, model ini memiliki regularization $\lambda$ yang digunakan untuk mengurangi error dikarenakan overfitting pada saat pelatihan. 
+LASSO (Least Absolute Shrinkage Selection Operator) Regression, also known as L1 Regression, merupakan salah satu regularized regression yang secara matematis hampir mirip dengan Linear Regression. Namun, model ini memiliki regularization $\lambda$ yang digunakan untuk mengurangi error dikarenakan overfitting pada saat pelatihan. The Residual Sum of Squares (RSS) can be archevied by
 
-$$\min_\beta ||y = X\beta||^2 $$
+$$RSS = \min |y - \hat{y}|$$
 
-Hasil dari Lasso Regression dapat dilihat dibawah ini.
+$$RSS + \lambda \sum_{i=1} \beta_i$$
+
+where $\lambda$ denotes regularization parameter that controls the amount of regularizatio applied. The RSS represent the measurement the error between predicted and actual values. This indicator can be any error measurement such as RMSE, MSE, or MAE. Hasil dari Lasso Regression dapat dilihat dibawah ini.
 
 <p align = "center">
 <img width = "800" height = "300" src = "figures/lassoreg/Lasso Regression data 1947 to predict 1959.png">
