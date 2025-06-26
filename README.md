@@ -15,31 +15,31 @@ In the GDP prediction project, there are many indicators or features that are no
 This data is open-source and is obtained from the Federal Reserve Economic Data (FRED), an online database created by the financial institution, The Federal Reserve Bank of St. Louis. This data can be in .csv, .xlsx., pdf format, or can be retrieved using the API.
 
 ### GDP Data 1947 - 1958
-This data has several features that are divided based on the duration of the year. Several indicators contained in this data:
+This data has several features that are divided into four group. Several indicators contained in this data:
 
 - Gross Domestic Product (Quarterly GDP) $\rightarrow$ `yoy_gdp`
 - Import Goods and Services (Quarterly Import) $\rightarrow$ `yoy_impgs`
 - Gross Private Domestic Investment (Quarterly Investment) $\rightarrow$ `yoy_gpdic`
 - Personal Consumption Expenditure (Quarterly Consumption) $\rightarrow$ `yoy_pce`
 - Export Goods and Services (Quarterly Export) $\rightarrow$ `yoy_expgs`
-- Industrial Production: Utilites: Electric and Gas Utilites (Quarterly Index) $\rightarrow$ `yoy_`
+- Industrial Production: Utilites: Electric and Gas Utilites (Quarterly Index) $\rightarrow$ `yoy_iputil`
 
 ### GDP Data 1959 - 1971
 The features on this duration are the same as before, but with the addition of:
 
-- Personal Consumption Expenditures: energy goods and services (monthly) 
+- Personal Consumption Expenditures: energy goods and services (monthly) $\rightarrow$ `yoy_pceens`
 
 ### GDP Data 1972 - 2003
 The indicators for this year's interval have additional features in the form of:
 
-- Industrial Production: Manufacturing (Quarterly Index)
-- Industrial Production: Manufacturing: Nondurable Goods: Chemical (Quarterly Index)
-- Industrial Production: Manufacturing: Nondurable Goods: Food, Beverage, and Tobacco (Quarterly Index) 
+- Industrial Production: Manufacturing (Quarterly Index) $\rightarrow$ `yoy_ipman`
+- Industrial Production: Manufacturing: Nondurable Goods: Chemical (Quarterly Index) $\rightarrow$ `yoy_chemical_goods`
+- Industrial Production: Manufacturing: Nondurable Goods: Food, Beverage, and Tobacco (Quarterly Index) $\rightarrow$ `yoy_food_bev_tob_goods`
 
 ### GDP Data 2004 - 2024
 Penambahan pada range ini adalah:
 
-- Producer Price Index by Industry: Industrial Gas Manufacturing (Quarterly index)
+- Producer Price Index by Industry: Industrial Gas Manufacturing (Quarterly index) $\rightarrow$ `yoy_ppi_industry`
 
 ## Exploratory Data Analysis
 The projection of the U.S. GDP from FRED can be seen below.
@@ -50,11 +50,11 @@ The projection of the U.S. GDP from FRED can be seen below.
 
 Based on the picture, we see several economic events:
 
-1. The Post-War Economic Crisis in 1949: Tahun tersebut merupakan waktu transisi menjadi peaceful economy after the world war 2. Penurunan aktivitas ekonomi tersebut diakibatkan produksi yang biasanya untuk keperluan militer turun drastis. As a result, the government spending plummeted, leading to the unemployment rate skyrocketted and the economic activity significantly dropped.
+1. The Post-War Economic Crisis in 1949: That year was the time towards a peaceful economy after World War 2. The decline in economic activity was caused by a drastic drop in production, which is usually for military purposes. As a result, the government spending plummeted, leading to the unemployment rate skyrocketted and the economic activity significantly dropped.
 
-2. Great Recession 2007-2009: Krisis ekonomi tahun ini dikarenakan subprime motgage crisis, dimana bank mengeluarkan pinjaman rumah dengan resiko atau bunga tinggi kepada kreditur yang memiliki sejarah kredit yang buruk. Permintaan konsumen terhadap rumah meningkat karena suku bunga yang rendah dan syarat pinjaman yang mudah pada 2001. Banyak pembeli rumah yang mengajukan adjustable-rate mortgage (produk dari subprime mortgage). Namun, pada saat suku bunga mulai naik pada 2005, nilai pembayaran hipotek juga meningkat. Akhirnya, peminjam-peminjam yang gagal bayar tidak akan diberikan pinjaman laih bank, sehingga mereka terlilit utang dan harga rumah anjlok. The collapse of the subprime mortgage market led to bank failures, a credit freeze, and a global economic downturn.
+2. Great Recession 2007-2009: This year's economic crisis is called the subprime mortgage crisis, where banks issue high-risk or high-interest home loans to creditors who have a bad credit history. Consumer demand for homes increased due to low interest rates and easy loan terms in 2001.Many home buyers are applying for adjustable-rate mortgages (a product of subprime mortgages). However, when interest rates started rising in 2005, mortgage payments also increased. Finally, borrowers who default will not be given another loan from the bank, so they are in debt and house prices plummet. The collapse of the subprime mortgage market led to bank failures, a credit freeze, and a global economic downturn.
 
-3. The Pandemic Recession 2020: Krisis ini diakibatkan penyakit dari virus COVID-19. Karena pandemi ini, pemerintah turun tangan dengan memberlakukan lockdown-membatasi aktifitas masyarakat-untuk mengurangi sebaran penyakit ini. Akibatnya, beberapa toko tutup permanen, unemployment rate meningkat tajam, dan akhirnya GDP negara menurun.
+3. The Pandemic Recession 2020:This crisis is caused by the disease from the COVID-19 virus. Because of this pandemic, the government intervened by imposing a lockdown - limiting community activities - to reduce the spread of this disease. As a result, several shops closed permanently, the unemployment rate increased sharply, and finally the country's GDP dropped. 
 
 <p align = "center">
 <img width = "500" height = "350" src = "figures/correlation matrix 1947 1958.png">
@@ -73,9 +73,11 @@ Based on the picture, we see several economic events:
 </p>
 
 
-- Gambar diatas merupakan matriks korelasi untuk setiap fitur-fitur yang ada di dalam dengan renge tertentu dalam bentuk plot heatmap. The `yoy_pce`, *Personal Consumption Expenditures*, mendapatkan nilai tertinggi dalam perhitungan korelasi Pearson untuk setiap jarak tahun. Artinya, peningkatan konsumsi masyarakat sangat mempengaruhi pendapatan negara jika dibandingkan dengan fitur-fitur lain.
+- The image above is a Pearson correlation matrix for each of the features in it with a certain range in the form of a heatmap plot. The `yoy_pce`, *Personal Consumption Expenditures*, gets the highest value in the Pearson correlation calculation for each year range. This means that the increase in public consumption greatly affects state revenue when compared to other factors.
 
-Proyek kali ini akan memperhatikan model mana saja yang dapat memprediksi GDP secara akurat, mulai dari negara mengalami surplus hingga krisis ekonomi.
+- Another interesting thing is the correlation between `date` and `yoy_gdp` which, in terms of value, is inconsistent. Of the four groups, the lowest value obtained was **-0.72** in the 1972-2003 group. This indicates a decline in GDP from year to year. Moreover, there are so many factors, either endogenous (e.g. The FED monetary tightening) or exogenous (e.g. oil crisis, the WTC incident), that leads to economic downfall, but cannot be seen only with a single linegraph of GDP growth. 
+
+This project will look at which models can accurately predict GDP, from countries experiencing surplus to economic crisis.
 
 ## Method
 The prediction models we used in this project is:
@@ -83,7 +85,7 @@ The prediction models we used in this project is:
 - Econometric (AutoRegressive (AR) + Factor Model (FM))
 - Machine learning (Linear Regression, Decision Tree, Random Forest, XGBoost)
 
-Eksperimen akan dibagi menjadi enam konfigurasi. Pertama, model dilatih menggunakan data 1947-1958 untuk memprediksi GDP tahun yang sama. Model yang telah dilatih akan digunakan untuk memprediksi GDP tahun berikutnya, yaitu 1959-1971, 1972-2003, dan 2004-2024. Kedua, data tahun 1959-1971 digunakan model untuk memprediksi tahun 1972-2003 dan 2004-2024, dan begitu pula data tahun 1972-2003. Hal ini dilakukan karena data yang akan diprediksi memiliki fitur-fitur yang ada pada data digunakan untuk melatih model. Setiap model yang diajukan menggunakan konfigurasi tersebut. Hasil dari prediksi akan menggunakan metrik ***root mean squared error***. 
+The experiment will be divided into three configurations with six outputs. First, the model is trained using the 1947-1958 data set to predict GDP for the 1959-1971, 1972-2003, and 2004-2024 year groups. Second, the 1959-1971 data set is used by the model to predict the 1972-2003 and 2004-2024 year groups, and the model with the 1972-2003 data set is trained to predict GDP for the 2004-2024 year group. This is done because the data to be predicted has features that are in the data used to train the model. Each proposed model uses this configuration. The results of the prediction will use the ***root mean squared error*** metric to show the accuracy of the prediction.
 
 <p>
 <img width = "800" height = "300" src = "figures/exp config.png">
@@ -112,7 +114,7 @@ dimana $\beta_0$ adalah intercept, $\beta_1, \beta_2$ denotes slope, $X_1, X_2, 
 <img width = "800" height = "300" src = "figures/linalg/Linear Regression data 1947 to predict 2004.png">
 </p>
 
-- Empat Gambar diatas merupakan hasil prediksi menggunakan data dari 1947-1958 yang memiliki 6 indikator dengan linear regression model. Model dengan data ini dapat memprediksi secara akurat jika dilihat dari nilai RMSE yang kecil. Namun, dari ketiga krisis ekonomi yang dibahas, the linear regression with data in 1947 still not accurately predict them.
+- The four images above are the results of predictions using data from 1947-1958 which have 6 indicators with a linear regression model. The model with this data can predict accurately if seen from the small RMSE value. However, of the three economic crises discussed, the linear regression with data in 1947 still does not accurately predict them.
 
 <p align = "center">
 <img width = "800" height = "300" src = "figures/linalg/Linear Regression data 1959 to predict 1972.png">
@@ -122,22 +124,22 @@ dimana $\beta_0$ adalah intercept, $\beta_1, \beta_2$ denotes slope, $X_1, X_2, 
 <img width = "800" height = "300" src = "figures/linalg/Linear Regression data 1959 to predict 2004.png">
 </p>
 
-- Dari dua gambar diatas, regressi linear dengan data tahun 1959 memprediksi lebih akurat jika dibandingkan dengan 1948 dalam hal prediksi GDP. Terlebih, model ini dapat memprediksi krisis ekonomi tahun 2020 dengan nilai RMSE yang lebih kecil. 
+- From the two figures above, linear regression with 1959 data predicts more accurately when compared to 1948 in terms of GDP prediction. Moreover, this model can predict the 2020 economic crisis with a smaller RMSE value. 
 
 <p align = "center">
 <img width = "800" height = "300" src = "figures/linalg/Linear Regression data 1972 to predict 2004.png">
 </p>
 
-- Gambar diatas merupakan hasil prediksi model dengan data dari tahun 1972 hingga 2003 yang memiliki 10 fitur. RMSE regressi linear dengan data ini lebih kecil jika dibandinkan dengan data-data sebelumnya.
+- The image above is the result of model prediction with data from 1972 to 2003 which has 10 features. The RMSE of linear regression with this data is smaller when compared to previous data.
 
 ### LASSO Regression
-LASSO (Least Absolute Shrinkage Selection Operator) Regression, also known as L1 Regression, merupakan salah satu regularized regression yang secara matematis hampir mirip dengan Linear Regression. Namun, model ini memiliki regularization $\lambda$ yang digunakan untuk mengurangi error dikarenakan overfitting pada saat pelatihan. The Residual Sum of Squares (RSS) can be archevied by
+LASSO (Least Absolute Shrinkage Selection Operator) Regression, also known as L1 Regression, is one of the regularized regressions that is mathematically almost similar to Linear Regression. However, this model has a regularization $\lambda$ which is used to reduce errors due to overfitting during training. The Residual Sum of Squares (RSS) can be archived by
 
 $$RSS = \min |y - \hat{y}|$$
 
 $$RSS + \lambda \sum_{i=1} \beta_i$$
 
-where $\lambda$ denotes regularization parameter that controls the amount of regularizatio applied. The RSS represent the measurement the error between predicted and actual values. This indicator can be any error measurement such as RMSE, MSE, or MAE. Hasil dari Lasso Regression dapat dilihat dibawah ini.
+where $\lambda$ denotes regularization parameter that controls the amount of regularizatio applied. The RSS represent the measurement the error between predicted and actual values. This indicator can be any error measurement such as RMSE, MSE, or MAE.The result of Lasso Regression model can be seen below.
 
 <p align = "center">
 <img width = "800" height = "300" src = "figures/lassoreg/Lasso Regression data 1947 to predict 1959.png">
@@ -151,7 +153,7 @@ where $\lambda$ denotes regularization parameter that controls the amount of reg
 <img width = "800" height = "300" src = "figures/lassoreg/Lasso Regression data 1947 to predict 2004.png">
 </p>
 
-- Berdasarkan tiga gambar diatas, model lasso regression dengan data 1947 yang memiliki 5 fitur mampu memprediksi data tahun 1959 ke 1971 dengan RMSE 1.5 lebih kecil daripada data tahun 1972 keatas.  
+- Based on the three images above, the lasso regression model with 1947 data that has 5 features is able to predict data from 1959 to 1971 with an RMSE of 1.5 smaller than data from 1972 and above. 
 
 <p align = "center">
 <img width = "800" height = "300" src = "figures/lassoreg/Lasso Regression data 1959 to predict 1972.png">
@@ -161,17 +163,17 @@ where $\lambda$ denotes regularization parameter that controls the amount of reg
 <img width = "800" height = "300" src = "figures/lassoreg/Lasso Regression data 1959 to predict 2004.png">
 </p>
 
-- Dua gambar diatas menunjukkan model dengan data 1959 yang memiliki 6 fitur yang dapat memprediksi GDP growth tahun 1972 keatas dengan RMSE yang lebih kecil jika dibandingkan dengan lasso regression dengan data 1948 dan model Linear Regression dengan tahun data yang sama. 
+- The two images above show a model with 1959 data that has 6 features that can predict GDP growth in 1972 and above with a smaller RMSE when compared to lasso regression with 1948 data and the Linear Regression model with the same data year.
 
 <p align = "center">
 <img width = "800" height = "300" src = "figures/lassoreg/Lasso Regression data 1972 to predict 2004.png">
 </p>
 
-- Gambar diatas menunjukkan lasso regression dengan data tahun 1972 yang berisi sekitar 10 fitur dapat memprediksi pertumbuhan tahunan GDP di Amerika dengan nilai RMSE dibawah 1. Nilai tersebut sama dengan Regressi Linear. 
+- The figure above illustrates lasso regression model by using data in 1972 that contains around 10 features can predict yearly US GDP growth with RMSE score below 1.
 
 ### eXtreme Gradient Boosting
 
-XGboost (eXtreme) merupakan model tree-based, boosting algorithm yang memanfaatkan gradient descent. It known for its effiency, speed, and ability to handle large dataset. The prediction results using this model can be seen in the images below.
+XGboost (eXtreme) merupakan model tree-based, boosting algorithm which utilize gradient descent. It known for its effiency, speed, and ability to handle large dataset. The prediction results using this model can be seen in the images below.
 
 <p align = "center">
 <img width = "800" height = "300" src = "figures/xgboost/XGBoost data 1947 to predict 1959.png">
@@ -185,7 +187,7 @@ XGboost (eXtreme) merupakan model tree-based, boosting algorithm yang memanfaatk
 <img width = "800" height = "300" src = "figures/xgboost/XGBoost data 1947 to predict 2004.png">
 </p>
 
-- Berdasarkan tiga gambar diatas, model dengan data tahun 1947 tidak mampu melakukan prediksi GDP dengan range tahun 1959 ke 1971 sebaik Lasso dan Linear Regression, tapi mampu memprediksi GDP dengan range tahun 1972-2003 dan 2004-2024 dengan RMSE yang lebih kecil dari dua model tersebut.
+- Based on the three figures above, the 1947-data-group model is not able to predict GDP on 1959-1971 as well as Lasso and Linear Regression, but is able to predict GDP with a range of 1972-2003 and 2004-2024 with a smaller RMSE than the two models.
 
 <p align = "center">
 <img width = "800" height = "300" src = "figures/xgboost/XGBoost data 1959 to predict 1972.png">
@@ -195,26 +197,26 @@ XGboost (eXtreme) merupakan model tree-based, boosting algorithm yang memanfaatk
 <img width = "800" height = "300" src = "figures/xgboost/XGBoost data 1959 to predict 2004.png">
 </p>
 
-- Plot YoY Growth GDP tahun 1972-2003 menunjukkan model dengan data tahun 1959-1971 dapat memprediksi dengan RMSE yang hampir sama dengan model Lasso dan Regular Linear Regression, tapi cukup buruk dalam memprediksi GDP tahun 2004-2024.
+- The YoY Growth GDP plot for 1972-2003 shows that the model with the 1959-1971 data group can predict with almost the same RMSE as the Lasso and Regular Linear Regression models, but is quite poor in predicting GDP for 2004-2024.
 
 <p align = "center">
 <img width = "800" height = "300" src = "figures/xgboost/XGBoost data 1972 to predict 2004.png">
 </p>
 
-- Gambar diatas menunjukkan model XGBoost yang dilatih dengan data tahun 1972-2003 belum mampu memprediksi GDP periode 2004-2024 jika dibandingkan dengan Linear dan Lasso Regression. Model ini tidak akurat dikarenakan jumlah data yang digunakan pada proyek ini tidak banyak.
+- The image above shows that the XGBoost model trained with 1972-2003 data has not been able to predict GDP for the 2004-2024 period when compared to Linear and Lasso Regression. This model is not accurate because the number of data used in this project is not abundance.
 
 ### Econometric (AR + FM)
-Autoregressive (AR) model merupakan model machine learning yang menggunakan satu atau lebih variabel dari waktu sebelumya untuk meramal hasil yang akan datang. Model ini biasa digunakan pada data yang memiliki deretan waktu. Dalam model AR, output nya adalah titik data masa depan yang diekspressikan sebagai kombinasi linear dari titik data masa lalu $p$. $p$ adalah jumlah lags yang dimasukkan ke persamaan. Jika $p = 1$, dan studi kasusnya adalah prediksi GDP, maka ekspressi matematisnya adalah
+Autoregressive (AR) model is a machine learning model that uses one or more variables from previous time periods to predict future outcomes. This model is commonly used on time-series data. In an AR model, the output is a future data point expressed as a linear combination of past data points $p$. $p$ is the number of lags entered into the equation. If $p = 1$, and the case study is GDP forecasting, then the mathematical expression is
 
 $$GDP_t = \delta + \psi_1 GDP_{t-1} + \epsilon_t$$
 
-dengan $\psi_1$ adalah koeffisien, $\delta$ denotes the constant (or intercept in linear regression). If we add one exogenous variable, then the equation will be
+where $\psi_1$ is coefficient, $\delta$ denotes the constant (or intercept in linear regression). If we add one exogenous variable, then the equation will be
 
 $$GDP_t = \delta + \psi_1 GDP_{t-1} + \phi_t Q_t + \epsilon_t $$
 
-dimana $\phi_t$ sebagai koefisien dari exogenous variabel $Q_t$ saat waktu $t$. 
+whit $\phi_t$ as a coefficient of exogenous variables $Q_t$ at time $t$. 
 
-Factor Model (FM) merupakan alat statistik yang menguraikan variabel menjadi komponen umum (faktor) and unique or idiosyncratic error. Rumus yang mewakilkan definisi tersebut
+Factor Model (FFM) is a statistical tool that decomposes variables into common components (factors) and unique or idiosyncratic errors. The formula that represents this definition is
 
 $$X_{it} = \lambda_i F_t + \epsilon_{it}$$
 
