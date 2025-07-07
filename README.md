@@ -161,7 +161,6 @@ where $\lambda$ denotes regularization parameter that controls the amount of reg
 <img width = "800" height = "300" src = "figures/lassoreg/Lasso Regression data 1947 to predict 2004.png">
 </p>
 
-
 <p align = "center">
 <img width = "800" height = "300" src = "figures/lassoreg/Lasso Regression data 1959 to predict 1972.png">
 </p>
@@ -202,8 +201,6 @@ XGboost (eXtreme) is tree-based and boosting algorithm which utilize gradient de
 <img width = "800" height = "300" src = "figures/xgboost/XGBoost data 1947 to predict 2004.png">
 </p>
 
-- Based on the three figures above, the 1947-data-group model is not able to predict GDP on 1959-1971 as well as Lasso and Linear Regression, but is able to predict GDP with a range of 1972-2003 and 2004-2024 with a smaller RMSE than the two models.
-
 <p align = "center">
 <img width = "800" height = "300" src = "figures/xgboost/XGBoost data 1959 to predict 1972.png">
 </p>
@@ -212,13 +209,10 @@ XGboost (eXtreme) is tree-based and boosting algorithm which utilize gradient de
 <img width = "800" height = "300" src = "figures/xgboost/XGBoost data 1959 to predict 2004.png">
 </p>
 
-- The YoY Growth GDP plot for 1972-2003 shows that the model with the 1959-1971 data group can predict with almost the same RMSE as the Lasso and Regular Linear Regression models, but is quite poor in predicting GDP for 2004-2024.
-
 <p align = "center">
 <img width = "800" height = "300" src = "figures/xgboost/XGBoost data 1972 to predict 2004.png">
 </p>
 
-- The image above shows that the XGBoost model trained with 1972-2003 data has not been able to predict GDP for the 2004-2024 period when compared to Linear and Lasso Regression. This model is not accurate because the number of data used in this project is not abundance.
 
 | \ | Train | Feature | Predict | RMSE|
 |:-------:|:----------:|:-------:|:---------:|:--------:|
@@ -229,7 +223,7 @@ XGboost (eXtreme) is tree-based and boosting algorithm which utilize gradient de
 | 5     | 1959-1971 | 8 |2004-2024| 2.98|
 | 6     | 1972-2003 | 10 |2004-2024| 2.16|
 
-- Berdasarkan hasil eksperimen dengan XGBoost dengan parameter `eta = 0.1`,and  `max_depth = 3`, the model performance is not good enough if we compared to the linear regression groups. The lowest RMSE that can be reached is 1.55 when using data group of 1959-1971 to predict 1972-2003.
+- Based on the experimental result by using XGBoost where the parameters are `eta = 0.1`,and `max_depth = 3`, the model performance is not good enough if we compared to the linear regression groups. The lowest RMSE that can be reached is 1.55 when using data group of 1959-1971 to predict 1972-2003.
 
 ### Elastic Net
 This model was introduced by Zou and Hastie in 2005. If Lasso regression is L1 Regularized regression and Ridge regression is L2 version, then elastic net is a combination of both. L1 is used as feature selector, while L2 for feature shrinkage. The equation of this model
@@ -261,6 +255,18 @@ where $\alpha |\beta|$ represent L1 penalty and $(1 -\alpha) \beta^2$ as L2 pena
 <p align = "center">
 <img width = "800" height = "300" src = "figures/elasticnet/Elastic Net Regression data 1972 to predict 2004.png">
 </p>
+
+| \ | Train | Feature | Predict | RMSE|
+|:-------:|:----------:|:-------:|:---------:|:--------:|
+| 1     | 1947-1958 | 7 | 1958 - 1971| 1.06|
+| 2     | 1947-1958 | 7 |1972 - 2003|2.06 |
+| 3     | 1947-1958 | 7 |2004 - 2024|2.62 |
+| 4     | 1959-1971 | 8 |1972-2003| 1.15|
+| 5     | 1959-1971 | 8 |2004-2024| 1.05|
+| 6     | 1972-2003 | 10 |2004-2024| 0.91|
+
+
+- Based on the model by using parameter `alpha = 0.1`, `l1_ratio = 0.5`, and `random_state = 42`, The lowest RMSE obtained was 0.91 when the model predicted GDP for 2004-2024 with data from 1972-2003. Roughly, the lowest result was no better than Ordinary Linear and Lasso Regression. However, when compared as a whole, Elastic Net has a lower RMSE score than both regression models.
 
 ### Econometric (AR + FM)
 Autoregressive (AR) model is a machine learning model that uses one or more variables from previous time periods to predict future outcomes. This model is commonly used on time-series data. In an AR model, the output is a future data point expressed as a linear combination of past data points $p$. $p$ is the number of lags entered into the equation. If $p = 1$, and the case study is GDP forecasting, then the mathematical expression is
