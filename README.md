@@ -43,7 +43,7 @@ Penambahan pada range ini adalah:
 The projection of the U.S. GDP from FRED can be seen below.
 
 <p align = 'center'>
-<img width = "850" height = "250" src = "figures/gdp growth edited.png">
+<img width = "850" height = "300" src = "figures/gdp growth edited.png">
 </p>
 
 Based on the picture, we see several economic events:
