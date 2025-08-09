@@ -35,7 +35,7 @@ The indicators for this year's interval have additional features in the form of:
 - Industrial Production: Manufacturing: Nondurable Goods: Food, Beverage, and Tobacco (Quarterly Index) $\rightarrow$ `yoy_food_bev_tob_goods`
 
 ### GDP Data 2004 - 2024
-Penambahan pada range ini adalah:
+Additional feature to this group is:
 
 - Producer Price Index by Industry: Industrial Gas Manufacturing (Quarterly index) $\rightarrow$ `yoy_ppi_industry`
 
