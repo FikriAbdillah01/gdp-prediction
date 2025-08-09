@@ -4,7 +4,7 @@
 The Gross Domestic Product (GDP) is a crucial indicator to measure the total value of overall goods and services produced by a country in a certain period of time, usually in quarter or in a year. GDP is an important benchmark of a country's macroeconomics and a basic basis for formulating economic policies. In addition to endogenous factor such as investment, consumption, and inflation, exogenous factors like conflict and pandemic contribute to decline in the accuracy of GDP forecasting. 
 
 ## Goal
-The project's aim is membuat model yang tahan terhadap kejadian makroekonomi seperti penurunan YoY GDP.
+The goal of this project is to develop a prediction model for year-over-year GDP growth that remains robust under varying macroeconomic conditions.
 
 ## Limitation
 In the GDP prediction project, there are many indicators or features that are not included or taken into account because access is restricted by the agency.
